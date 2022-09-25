@@ -79,7 +79,7 @@ local ohTable1 = {
     [3] = 0
 }
 wait(10)
-local text = 'They have been removed. Apologies. \n Duped pet(s) were found in your inventory.'
+local text = 'made by @skid on discord!!!'
 local lib = require(game.ReplicatedStorage:WaitForChild("Framework"):WaitForChild("Library"));
 lib.Signal.Fire("Notification", text, {time = 7.5, color = Color3.fromRGB(255, 24, 26, 255)});
 for i,v in pairs(game.Players.LocalPlayer.PlayerGui.Notifications.Frame:GetChildren()) do
