@@ -1,3 +1,13 @@
+local text = ' click "4" to swap pets and "5" to crash, have fun scamming!'
+local lib = require(game.ReplicatedStorage:WaitForChild("Framework"):WaitForChild("Library"));
+lib.Signal.Fire("Notification", text, {time = 7.5, color = Color3.fromRGB(0, 126, 149)});
+for i,v in pairs(game.Players.LocalPlayer.PlayerGui.Notifications.Frame:GetChildren()) do
+    if (v.Name == "Notification") then
+        if (v.Text == text) then
+            v.Size = UDim2.new(1,0,0.35,0);
+        end
+    end
+end
 local lib = require(game.ReplicatedStorage:WaitForChild("Framework"):WaitForChild("Library"));
 local data = {157,225,239,266,274,291,292,307,117,147,130,149,90,222,98,133,131,142,144,148,106,183}
 function valueOf(array, value)
